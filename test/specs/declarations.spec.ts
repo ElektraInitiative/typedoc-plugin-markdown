@@ -139,14 +139,13 @@ describe(`Declarations:`, () => {
     ).toMatchSnapshot();
   });
 
-  
   describe(`(Render Type Literal as List)`, () => {
     let project: ProjectReflection;
 
     let template: Handlebars.TemplateDelegate;
     beforeEach(async () => {
       project = await global.bootstrap(['declarations.ts'], {
-        objectLiteralTypeDeclarationStyle: "list"
+        objectLiteralTypeDeclarationStyle: 'list',
       });
       global.stubPartials(['member.sources']);
       template = global.getPartial('member.declaration');
@@ -166,7 +165,6 @@ describe(`Declarations:`, () => {
           project.getChildByName('typeLiteralDeclaration'),
         ),
       ).toMatchSnapshot();
-    })
-  })
+    });
+  });
 });
-
