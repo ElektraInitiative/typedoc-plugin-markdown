@@ -70,7 +70,7 @@ export function registerHelpers(theme: MarkdownTheme) {
   ifShowReturnsHelper();
   ifShowTypeHierarchyHelper();
   indexSignatureTitleHelper();
-  parameterTableHelper();
+  parameterTableHelper(theme);
   objectLiteralMemberHelper(theme);
   referenceMember();
   reflectionPathHelper();
@@ -79,7 +79,7 @@ export function registerHelpers(theme: MarkdownTheme) {
   returns();
   signatureTitleHelper(theme);
   tocHelper(theme);
-  typeHelper();
+  typeHelper(theme);
   typeAndParentHelper();
   typeParameterTableHelper();
 }

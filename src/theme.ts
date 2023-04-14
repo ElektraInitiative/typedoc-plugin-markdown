@@ -42,6 +42,7 @@ export class MarkdownTheme extends Theme {
   publicPath!: string;
   preserveAnchorCasing!: boolean;
   objectLiteralTypeDeclarationStyle: ObjectLiteralDeclarationStyle;
+  useStorybook!: boolean;
   project?: ProjectReflection;
   reflection?: DeclarationReflection;
   location!: string;
@@ -53,8 +54,14 @@ export class MarkdownTheme extends Theme {
     super(renderer);
 
     // prettier-ignore
-    this.allReflectionsHaveOwnDocument = this.getOption('allReflectionsHaveOwnDocument',) as boolean;
-    this.entryDocument = this.getOption('entryDocument') as string;
+    this.useStorybook = this.getOption('useStorybook') as boolean;
+    this.allReflectionsHaveOwnDocument = this.getOption(
+      'allReflectionsHaveOwnDocument',
+    ) as boolean;
+    const entryDocument = this.getOption('entryDocument') as string;
+    this.entryDocument = this.useStorybook
+      ? 'docs/' + entryDocument.replace(/\.md$/, '.mdx')
+      : entryDocument;
     this.entryPoints = this.getOption('entryPoints') as string[];
     this.filenameSeparator = this.getOption('filenameSeparator') as string;
     this.hideBreadcrumbs = this.getOption('hideBreadcrumbs') as boolean;
@@ -99,7 +106,9 @@ export class MarkdownTheme extends Theme {
     const urls: UrlMapping[] = [];
     const noReadmeFile = this.readme.endsWith('none');
     if (noReadmeFile) {
-      project.url = this.entryDocument;
+      project.url = this.useStorybook
+        ? 'docs/' + this.entryDocument
+        : this.entryDocument;
       urls.push(
         new UrlMapping(
           this.entryDocument,
@@ -118,9 +127,18 @@ export class MarkdownTheme extends Theme {
     }
     project.children?.forEach((child: Reflection) => {
       if (child instanceof DeclarationReflection) {
-        this.buildUrls(child as DeclarationReflection, urls);
+        this.buildUrls(child, urls);
       }
     });
+
+    if (this.useStorybook) {
+      (project as any).useStorybook = true;
+      (project as any).index = {
+        storybookName: 'docs/README',
+      };
+      (project as any).storybookName = 'docs/app-modules';
+    }
+
     return urls;
   }
 
@@ -149,11 +167,21 @@ export class MarkdownTheme extends Theme {
     } else if (reflection.parent) {
       this.applyAnchorUrl(reflection, reflection.parent, true);
     }
+
+    if (this.useStorybook) {
+      (reflection as any).useStorybook = true;
+
+      const storybookName = reflection.url?.replace(/\.mdx$/, '');
+      (reflection as any).storybookName = storybookName;
+    }
+
     return urls;
   }
 
   toUrl(mapping: any, reflection: DeclarationReflection) {
-    return mapping.directory + '/' + this.getUrl(reflection) + '.md';
+    const fileEnding = this.useStorybook ? '.mdx' : '.md';
+
+    return mapping.directory + '/' + this.getUrl(reflection) + fileEnding;
   }
 
   getUrl(reflection: Reflection, relative?: Reflection): string {
@@ -323,31 +351,31 @@ export class MarkdownTheme extends Theme {
       {
         kind: [ReflectionKind.Module],
         isLeaf: false,
-        directory: 'modules',
+        directory: this.useStorybook ? 'docs/modules' : 'modules',
         template: this.getReflectionTemplate(),
       },
       {
         kind: [ReflectionKind.Namespace],
         isLeaf: false,
-        directory: 'modules',
+        directory: this.useStorybook ? 'docs/modules' : 'modules',
         template: this.getReflectionTemplate(),
       },
       {
         kind: [ReflectionKind.Enum],
         isLeaf: false,
-        directory: 'enums',
+        directory: this.useStorybook ? 'docs/enums' : 'enums',
         template: this.getReflectionTemplate(),
       },
       {
         kind: [ReflectionKind.Class],
         isLeaf: false,
-        directory: 'classes',
+        directory: this.useStorybook ? 'docs/classes' : 'classes',
         template: this.getReflectionTemplate(),
       },
       {
         kind: [ReflectionKind.Interface],
         isLeaf: false,
-        directory: 'interfaces',
+        directory: this.useStorybook ? 'docs/interfaces' : 'interfaces',
         template: this.getReflectionTemplate(),
       },
       ...(this.allReflectionsHaveOwnDocument
@@ -355,19 +383,19 @@ export class MarkdownTheme extends Theme {
             {
               kind: [ReflectionKind.TypeAlias],
               isLeaf: true,
-              directory: 'types',
+              directory: this.useStorybook ? 'docs/types' : 'types',
               template: this.getReflectionMemberTemplate(),
             },
             {
               kind: [ReflectionKind.Variable],
               isLeaf: true,
-              directory: 'variables',
+              directory: this.useStorybook ? 'docs/variables' : 'variables',
               template: this.getReflectionMemberTemplate(),
             },
             {
               kind: [ReflectionKind.Function],
               isLeaf: true,
-              directory: 'functions',
+              directory: this.useStorybook ? 'docs/functions' : 'functions',
               template: this.getReflectionMemberTemplate(),
             },
           ]
@@ -396,6 +424,6 @@ export class MarkdownTheme extends Theme {
   }
 
   get globalsFile() {
-    return 'modules.md';
+    return this.useStorybook ? 'docs/app-modules.mdx' : 'modules.md';
   }
 }

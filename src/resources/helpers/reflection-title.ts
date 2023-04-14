@@ -25,7 +25,12 @@ export default function (theme: MarkdownTheme) {
           const typeParameters = this.model.typeParameters
             .map((typeParameter: ParameterReflection) => typeParameter.name)
             .join(', ');
-          title.push(`<${typeParameters}${shouldEscape ? '\\>' : '>'}`);
+
+          title.push(
+            `${shouldEscape ? '\\<' : '<'}${typeParameters}${
+              shouldEscape ? '\\>' : '>'
+            }`,
+          );
         }
       }
       return title.join('');

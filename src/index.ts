@@ -82,6 +82,13 @@ export function load(app: Application) {
   });
 
   app.options.addDeclaration({
+    help: '[Markdown Plugin] Generate Storybook compatible MDX 2 files into a subfolder `docs`.',
+    name: 'useStorybook',
+    type: ParameterType.Boolean,
+    defaultValue: false,
+  });
+
+  app.options.addDeclaration({
     help: '[Markdown Plugin] Specify the Type Declaration Render Style',
     name: 'objectLiteralTypeDeclarationStyle',
     type: ParameterType.String,
