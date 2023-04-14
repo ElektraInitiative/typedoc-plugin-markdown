@@ -19,10 +19,11 @@ import {
   UnknownType,
 } from 'typedoc';
 import { escapeChars } from '../../utils';
+import { MarkdownTheme } from '../../theme';
 
 type Collapse = 'object' | 'function' | 'all' | 'none';
 
-export default function () {
+export default function (theme: MarkdownTheme) {
   Handlebars.registerHelper(
     'type',
     function (
@@ -46,7 +47,7 @@ export default function () {
       emphasis = true,
     ) {
       if (this instanceof ReferenceType) {
-        return getReferenceType(this, emphasis);
+        return getReferenceType(this, emphasis, theme.useStorybook);
       }
 
       if (this instanceof ArrayType && this.elementType) {
@@ -70,11 +71,11 @@ export default function () {
       }
 
       if (this instanceof ReflectionType) {
-        return getReflectionType(this, collapse);
+        return getReflectionType(this, collapse, theme.useStorybook);
       }
 
       if (this instanceof DeclarationReflection) {
-        return getReflectionType(this, collapse);
+        return getReflectionType(this, collapse, theme.useStorybook);
       }
 
       if (this instanceof TypeOperatorType) {
@@ -105,7 +106,7 @@ export default function () {
         return getLiteralType(this);
       }
 
-      return this ? escapeChars(this.toString()) : '';
+      return this ? escapeChars(this.toString(), theme.useStorybook) : '';
     },
   );
 }
@@ -120,19 +121,23 @@ function getLiteralType(model: LiteralType) {
 export function getReflectionType(
   model: DeclarationReflection | ReflectionType,
   collapse: Collapse,
+  useStorybook: boolean,
 ) {
   const root = model instanceof ReflectionType ? model.declaration : model;
   if (root.signatures) {
     return collapse === 'function' || collapse === 'all'
       ? `\`fn\``
-      : getFunctionType(root.signatures);
+      : getFunctionType(root.signatures, useStorybook);
   }
   return collapse === 'object' || collapse === 'all'
     ? `\`Object\``
-    : getDeclarationType(root);
+    : getDeclarationType(root, useStorybook);
 }
 
-function getDeclarationType(model: DeclarationReflection) {
+function getDeclarationType(
+  model: DeclarationReflection,
+  useStorybook: boolean,
+) {
   if (model.indexSignature || model.children) {
     let indexSignature = '';
     const declarationIndexSignature = model.indexSignature;
@@ -158,9 +163,9 @@ function getDeclarationType(model: DeclarationReflection) {
             : ''
         }`;
       });
-    return `{ ${indexSignature ? indexSignature : ''}${
-      types ? types.join('; ') : ''
-    } }${
+    return `${useStorybook ? '\\{' : '{'} ${
+      indexSignature ? indexSignature : ''
+    }${types ? types.join('; ') : ''} }${
       model.defaultValue && model.defaultValue !== '...'
         ? `= ${escapeChars(model.defaultValue)}`
         : ''
@@ -169,10 +174,13 @@ function getDeclarationType(model: DeclarationReflection) {
   return '{}';
 }
 
-export function getFunctionType(modelSignatures: SignatureReflection[]) {
+export function getFunctionType(
+  modelSignatures: SignatureReflection[],
+  useStorybook: boolean,
+) {
   const functions = modelSignatures.map((fn) => {
     const typeParams = fn.typeParameters
-      ? `<${fn.typeParameters
+      ? `${useStorybook ? '\\<' : '<'}${fn.typeParameters
           .map((typeParameter) => typeParameter.name)
           .join(', ')}\\>`
       : [];
@@ -191,7 +199,11 @@ export function getFunctionType(modelSignatures: SignatureReflection[]) {
   return functions.join('');
 }
 
-function getReferenceType(model: ReferenceType, emphasis) {
+function getReferenceType(
+  model: ReferenceType,
+  emphasis: boolean,
+  useStorybook: boolean,
+) {
   if (model.reflection || (model.name && model.typeArguments)) {
     const reflection: string[] = [];
 
@@ -210,7 +222,7 @@ function getReferenceType(model: ReferenceType, emphasis) {
     }
     if (model.typeArguments && model.typeArguments.length > 0) {
       reflection.push(
-        `<${model.typeArguments
+        `${useStorybook ? '\\<' : '<'} ${model.typeArguments
           .map((typeArgument) => Handlebars.helpers.type.call(typeArgument))
           .join(', ')}\\>`,
       );

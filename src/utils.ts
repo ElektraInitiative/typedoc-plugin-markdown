@@ -14,12 +14,23 @@ export function formatContents(contents: string) {
   );
 }
 
-export function escapeChars(str: string) {
-  return str
-    .replace(/>/g, '\\>')
-    .replace(/_/g, '\\_')
-    .replace(/`/g, '\\`')
-    .replace(/\|/g, '\\|');
+export function escapeChars(str: string, useStorybookSyntax = false) {
+  const replacements: [RegExp, string][] = [
+    [/>/g, '\\>'],
+    [/_/g, '\\_'],
+    [/`/g, '\\`'],
+    [/\|/g, '\\|'],
+    ...((useStorybookSyntax
+      ? [
+          [/</g, '\\<'],
+          [/{/g, '\\{'],
+        ]
+      : []) as [RegExp, string][]),
+  ];
+
+  return replacements.reduce((acc, [regex, replacement]) => {
+    return acc.replace(regex, replacement);
+  }, str);
 }
 
 export function memberSymbol(

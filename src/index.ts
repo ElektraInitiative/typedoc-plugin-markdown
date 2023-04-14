@@ -51,7 +51,7 @@ export function load(app: Application) {
     help: '[Markdown Plugin] The file name of the entry document.',
     name: 'entryDocument',
     type: ParameterType.String,
-    defaultValue: 'README.md',
+    defaultValue: 'README.mdx',
   });
 
   app.options.addDeclaration({
@@ -77,6 +77,13 @@ export function load(app: Application) {
   app.options.addDeclaration({
     help: '[Markdown Plugin] Preserve anchor casing when generating links.',
     name: 'preserveAnchorCasing',
+    type: ParameterType.Boolean,
+    defaultValue: false,
+  });
+
+  app.options.addDeclaration({
+    help: '[Markdown Plugin] Generate Storybook compatible MDX 2 files.',
+    name: 'useStorybook',
     type: ParameterType.Boolean,
     defaultValue: false,
   });

@@ -27,9 +27,11 @@ export default function (theme: MarkdownTheme) {
         md.push(`**${this.name}**`);
       }
 
+      const shouldEscape = theme.useStorybook;
+
       if (this.typeParameters) {
         md.push(
-          `<${this.typeParameters
+          `${shouldEscape ? '\\<' : '<'}${this.typeParameters
             .map((typeParameter) => `\`${typeParameter.name}\``)
             .join(', ')}\\>`,
         );

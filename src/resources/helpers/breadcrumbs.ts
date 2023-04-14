@@ -19,11 +19,14 @@ export default function (theme: MarkdownTheme) {
         ? project.name
         : `[${project.name}](${Handlebars.helpers.relativeURL(entryDocument)})`,
     );
+
     if (hasReadmeFile) {
       breadcrumbs.push(
         this.url === project.url
           ? globalsName
-          : `[${globalsName}](${Handlebars.helpers.relativeURL('modules.md')})`,
+          : `[${globalsName}](${Handlebars.helpers.relativeURL(
+              theme.useStorybook ? 'docs/app-modules.mdx' : 'modules.md',
+            )})`,
       );
     }
     const breadcrumbsOut = breadcrumb(this, this.model, breadcrumbs);

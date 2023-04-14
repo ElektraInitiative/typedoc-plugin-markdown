@@ -2,8 +2,9 @@ import * as Handlebars from 'handlebars';
 import { ParameterReflection, ReflectionKind, ReflectionType } from 'typedoc';
 import { stripLineBreaks } from '../../utils';
 import { getReflectionType } from './type';
+import { MarkdownTheme } from '../../theme';
 
-export default function () {
+export default function (theme: MarkdownTheme) {
   Handlebars.registerHelper(
     'parameterTable',
 
@@ -32,13 +33,14 @@ export default function () {
 
       return table(
         this.reduce((acc: any, current: any) => parseParams(current, acc), []),
+        theme,
       );
     },
   );
 }
 
-function table(parameters: any) {
-  const showDefaults = hasDefaultValues(parameters);
+function table(parameters: any, theme: MarkdownTheme) {
+  const showDefaults = hasDefaultValues(parameters, theme);
 
   const comments = parameters.map(
     (param) => !!param.comment?.hasVisibleComponent(),
@@ -77,7 +79,7 @@ function table(parameters: any) {
     row.push(
       parameter.type
         ? Handlebars.helpers.type.call(parameter.type, 'object')
-        : getReflectionType(parameter, 'object'),
+        : getReflectionType(parameter, 'object', theme.useStorybook),
     );
 
     if (showDefaults) {
@@ -111,10 +113,13 @@ function getDefaultValue(parameter: ParameterReflection) {
     : '`undefined`';
 }
 
-function hasDefaultValues(parameters: ParameterReflection[]) {
+function hasDefaultValues(
+  parameters: ParameterReflection[],
+  theme: MarkdownTheme,
+) {
   const defaultValues = (parameters as ParameterReflection[]).map(
     (param) =>
-      param.defaultValue !== '{}' &&
+      param.defaultValue !== (theme.useStorybook ? '\\{}' : '{}') &&
       param.defaultValue !== '...' &&
       !!param.defaultValue,
   );
