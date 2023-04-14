@@ -51,7 +51,7 @@ export function load(app: Application) {
     help: '[Markdown Plugin] The file name of the entry document.',
     name: 'entryDocument',
     type: ParameterType.String,
-    defaultValue: 'README.mdx',
+    defaultValue: 'README.md',
   });
 
   app.options.addDeclaration({
@@ -82,7 +82,7 @@ export function load(app: Application) {
   });
 
   app.options.addDeclaration({
-    help: '[Markdown Plugin] Generate Storybook compatible MDX 2 files.',
+    help: '[Markdown Plugin] Generate Storybook compatible MDX 2 files into a subfolder `docs`.',
     name: 'useStorybook',
     type: ParameterType.Boolean,
     defaultValue: false,

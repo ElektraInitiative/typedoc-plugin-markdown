@@ -60,7 +60,7 @@ export class MarkdownTheme extends Theme {
     ) as boolean;
     const entryDocument = this.getOption('entryDocument') as string;
     this.entryDocument = this.useStorybook
-      ? 'docs/' + entryDocument
+      ? 'docs/' + entryDocument.replace(/\.md$/, '.mdx')
       : entryDocument;
     this.entryPoints = this.getOption('entryPoints') as string[];
     this.filenameSeparator = this.getOption('filenameSeparator') as string;
