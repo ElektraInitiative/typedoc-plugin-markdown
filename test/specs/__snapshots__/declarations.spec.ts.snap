@@ -1,0 +1,364 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Declarations: (Render Type Literal as List) should use correct list style when using "list" option 1`] = `
+"• \`Const\` **objectLiteralDeclaration**: \`Object\`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| \`valueA\` | \`number\` |
+| \`valueB\` | \`boolean\` |
+| \`valueC\` | {} |
+| \`valueD\` | \`string\` |
+| \`valueX\` | { \`valueA\`: \`number\`[] ; \`valueZ\`: \`string\` = 'foo' } |
+| \`valueX.valueA\` | \`number\`[] |
+| \`valueX.valueZ\` | \`string\` |
+| \`valueY\` | () => \`string\` |
+| \`valueZ\` | \`string\` |
+
+**valueA**: \`number\`
+
+Comment for valueA
+
+-----
+
+**valueB**: \`boolean\`
+
+\\-
+
+-----
+
+**valueC**: {}
+
+\\-
+
+-----
+
+**valueD**: \`string\`
+
+Multiline Comments for valueD
+
+Multiline Comments for valueD - line2
+
+**\`Example\`**
+
+\`\`\`typescript
+console.log("This is a multi line comment with code")
+console.log("This is a multi line comment with code - line2")
+console.log("This is a multi line comment with code - line3")
+\`\`\`
+
+-----
+
+**valueX**: { \`valueA\`: \`number\`[] ; \`valueZ\`: \`string\` = 'foo' }
+
+Comment for valueX
+
+-----
+
+**valueX.valueA**: \`number\`[]
+
+\\-
+
+-----
+
+**valueX.valueZ**: \`string\`
+
+\\-
+
+-----
+
+**valueY**: () => \`string\`
+
+Comment for value Y
+
+-----
+
+**valueZ**: \`string\`
+
+Comment for valueZ
+
+-----
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: (Render Type Literal as List) should use correct list style when using "list" option 2`] = `
+"• **typeLiteralDeclaration**: \`Object\`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| \`valueA?\` | \`number\` |
+| \`valueB?\` | \`boolean\` |
+| \`valueC\` | { \`[dataId: string]\`: \`\`"ok"\`\` \\| \`\`"ko"\`\`;  } |
+| \`valueD\` | \`unknown\` |
+| \`valueX\` | { \`valueA\`: \`number\`[] ; \`valueY\`: (\`z\`: \`string\`) => { \`a\`: \`string\` ; \`b\`: \`string\`  } ; \`valueZ\`: \`string\`  } |
+| \`valueX.valueA\` | \`number\`[] |
+| \`valueX.valueY\` | (\`z\`: \`string\`) => { \`a\`: \`string\` ; \`b\`: \`string\`  } |
+| \`valueX.valueZ\` | \`string\` |
+| \`valueY\` | () => \`string\` |
+| \`valueZ\` | \`string\` |
+
+**valueA?**: \`number\`
+
+Comments for valueA
+
+-----
+
+**valueB?**: \`boolean\`
+
+\\-
+
+-----
+
+**valueC**: { \`[dataId: string]\`: \`\`"ok"\`\` \\| \`\`"ko"\`\`;  }
+
+\\-
+
+-----
+
+**valueD**: \`unknown\`
+
+Multiline Comments for valueD
+
+Multiline Comments for valueD - line2
+
+**\`Example\`**
+
+\`\`\`typescript
+console.log("This is a multi line comment with code")
+console.log("This is a multi line comment with code - line2")
+console.log("This is a multi line comment with code - line3")
+\`\`\`
+
+-----
+
+**valueX**: { \`valueA\`: \`number\`[] ; \`valueY\`: (\`z\`: \`string\`) => { \`a\`: \`string\` ; \`b\`: \`string\`  } ; \`valueZ\`: \`string\`  }
+
+Comment for valueX
+
+-----
+
+**valueX.valueA**: \`number\`[]
+
+\\-
+
+-----
+
+**valueX.valueY**: (\`z\`: \`string\`) => { \`a\`: \`string\` ; \`b\`: \`string\`  }
+
+\\-
+
+-----
+
+**valueX.valueZ**: \`string\`
+
+Nested comment for valueZ
+
+-----
+
+**valueY**: () => \`string\`
+
+\\-
+
+-----
+
+**valueZ**: \`string\`
+
+Comment for valueZ
+
+-----
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile a const with default value 1`] = `
+"• \`Const\` **stringConstWithDefaultValue**: \`\`"hello"\`\`
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile a let with default value 1`] = `
+"• **stringLetWithDefaultValue**: \`string\` = \`'hello'\`
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile an undefined declaration 1`] = `
+"• **undefinedNumberDeclaration**: \`number\`
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile any function type 1`] = `
+"Ƭ **AnyFunctionType**<\`A\`\\>: (...\`input\`: \`any\`[]) => \`A\`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| \`A\` | \`any\` |
+
+#### Type declaration
+
+▸ (\`...input\`): \`A\`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| \`...input\` | \`any\`[] |
+
+##### Returns
+
+\`A\`
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile callable declaration 1`] = `
+"• **callableDeclaration**: (\`someArg\`: \`number\`) => \`boolean\`
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile declaration with accessors 1`] = `
+"• **getterAndSetter**: \`Object\`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| \`get getMe()\` | [\`Promise\`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<\`string\`\\> |
+| \`set setMe(x:string)\` | \`void\` |
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile declaration with double underscores in name and value 1`] = `
+"• \`Const\` **\\_\\_DOUBLE\\_UNDERSCORES\\_DECLARATION\\_\\_**: typeof [\`__DOUBLE_UNDERSCORES_DECLARATION__\`](../modules.md#__double_underscores_declaration__)
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile enum declaration 1`] = `
+"• **Down** = \`\`1\`\`
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile enum declaration with defaults 1`] = `
+"• **East** = \`\`"East"\`\`
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile function declaration 1`] = `
+"• **functionDeclaration**: (\`someArg\`: \`number\`) => \`boolean\`
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile indexable declaration 1`] = `
+"• **indexableDeclaration**: \`Object\`
+
+#### Index signature
+
+▪ [index: \`number\`]: \`string\`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| \`arg1\` | \`string\` |
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile object literal cast as a const 1`] = `
+"• \`Const\` **objectLiteralAsConstDeclaration**: \`Object\`
+
+Comments
+
+**\`Param\`**
+
+Comment for object.
+
+**\`Param\`**
+
+Comment for Prop1.
+
+**\`Param\`**
+
+Comment for Prop2.
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| \`Prop1\` | \`\`"Prop1"\`\` |
+| \`Prop2\` | \`\`"Prop2"\`\` |
+| \`Prop3\` | \`\`"Prop3"\`\` |
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile object literal declaration 1`] = `
+"• \`Const\` **objectLiteralDeclaration**: \`Object\`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| \`valueA\` | \`number\` | Comment for valueA |
+| \`valueB\` | \`boolean\` | - |
+| \`valueC\` | {} | - |
+| \`valueD\` | \`string\` | Multiline Comments for valueD Multiline Comments for valueD - line2 **\`Example\`** \`\`\`typescript console.log("This is a multi line comment with code") console.log("This is a multi line comment with code - line2") console.log("This is a multi line comment with code - line3") \`\`\` |
+| \`valueX\` | { \`valueA\`: \`number\`[] ; \`valueZ\`: \`string\` = 'foo' } | Comment for valueX |
+| \`valueX.valueA\` | \`number\`[] | - |
+| \`valueX.valueZ\` | \`string\` | - |
+| \`valueY\` | () => \`string\` | Comment for value Y |
+| \`valueZ\` | \`string\` | Comment for valueZ |
+
+[partial: member.sources]
+"
+`;
+
+exports[`Declarations: should compile type literal declaration 1`] = `
+"• **typeLiteralDeclaration**: \`Object\`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| \`valueA?\` | \`number\` | Comments for valueA |
+| \`valueB?\` | \`boolean\` | - |
+| \`valueC\` | { \`[dataId: string]\`: \`\`"ok"\`\` \\| \`\`"ko"\`\`;  } | - |
+| \`valueD\` | \`unknown\` | Multiline Comments for valueD Multiline Comments for valueD - line2 **\`Example\`** \`\`\`typescript console.log("This is a multi line comment with code") console.log("This is a multi line comment with code - line2") console.log("This is a multi line comment with code - line3") \`\`\` |
+| \`valueX\` | { \`valueA\`: \`number\`[] ; \`valueY\`: (\`z\`: \`string\`) => { \`a\`: \`string\` ; \`b\`: \`string\`  } ; \`valueZ\`: \`string\`  } | Comment for valueX |
+| \`valueX.valueA\` | \`number\`[] | - |
+| \`valueX.valueY\` | (\`z\`: \`string\`) => { \`a\`: \`string\` ; \`b\`: \`string\`  } | - |
+| \`valueX.valueZ\` | \`string\` | Nested comment for valueZ |
+| \`valueY\` | () => \`string\` | - |
+| \`valueZ\` | \`string\` | Comment for valueZ |
+
+[partial: member.sources]
+"
+`;
